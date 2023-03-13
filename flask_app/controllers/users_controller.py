@@ -5,8 +5,6 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt (app)
 
-
-
 # route to main page
 @app.route('/')
 def index():
@@ -44,13 +42,15 @@ def save():
 @app.route('/dashboard')
 def dashboard():
     if "user_id" not in session:
+        flash('Please log in or register.')
         return redirect ('/')
-    data = {
-        'id' : session['user_id']
-    }
-    return render_template ('dashboard.html' , user = User.get_user_by_id(data)) # left html side, right controller side
+    else:
+        data = {
+            'id' : session['user_id']
+        }
+        return render_template ('dashboard.html' , user = User.get_user_by_id(data)) # left html side, right controller side
 
-# user login
+# user login/ LOGIN VALIDATIONS
 # needs to be a POST because of bcrypt function
 @app.route('/login', methods = ['POST'])
 def login():

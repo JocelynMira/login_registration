@@ -40,7 +40,7 @@ class User:
         for user in results:
             users.append(cls(user))
         return users
-    
+
     @classmethod
     def get_user_by_email(cls, data):
         query = """SELECT * FROM users
@@ -51,7 +51,7 @@ class User:
         if len(results) < 1:
             return False
         return cls(results[0])
-    
+
     @classmethod
     def get_user_by_id(cls, data):
         query = """SELECT * FROM users
@@ -60,7 +60,6 @@ class User:
         results = connectToMySQL(cls.db).query_db(query, data)
         return cls(results[0])
 
-
     # DELETE
     @classmethod
     def delete(cls, id):
@@ -68,11 +67,11 @@ class User:
                 WHERE id = %(id)s;"""
         results = connectToMySQL(cls.db).query_db(query, {'id': id})
         return results
-    
+
+    # REGISTER VALIDATIONS
     @staticmethod
     def validate_registration(user):
         is_valid = True
-        # REGISTER VALIDATIONS
         # checking database to make sure they're not already registered 
         query = "SELECT * FROM users WHERE email = %(email)s"
         results = connectToMySQL(User.db).query_db(query, user)
