@@ -5,6 +5,8 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt (app)
 
+
+
 # route to main page
 @app.route('/')
 def index():
@@ -67,7 +69,7 @@ def login():
         return redirect ('/')
     else:
         session['user_id'] = user.id
-        flash('You are now logged in')
+        flash('You are now logged in',"login")
         return redirect ('/dashboard')
 
 @app.route('/logout')

@@ -22,7 +22,7 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-    # CREATE
+    # CREATE 
     @classmethod
     def save(cls, data):
         query = """INSERT INTO users (first_name, last_name, email, password)
@@ -47,7 +47,9 @@ class User:
                 WHERE email = %(email)s;
                 """
         results = connectToMySQL(cls.db).query_db(query, data)
-        #results would be in a list 
+        # go through length of results and search for email
+        if len(results) < 1:
+            return False
         return cls(results[0])
     
     @classmethod
